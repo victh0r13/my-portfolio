@@ -651,8 +651,14 @@
           </svg>
           LinkedIn
         </a>
-        <!-- Coloque o PDF do currículo na mesma pasta deste arquivo com este nome -->
-        <a class="btn btn-quiet" href="CV_Victor_Hugo.pdf" download>
+        <!-- Os dois PDFs ficam na mesma pasta deste arquivo; o link troca com o idioma
+             (nomes definidos em UI.cvFile, mais abaixo no script) -->
+        <a
+          class="btn btn-quiet"
+          href="CV_Victor_Hugo_PT-BR.pdf"
+          download
+          data-i18n-href="cvFile"
+        >
           <svg
             width="17"
             height="17"
@@ -976,6 +982,11 @@
         },
         heroPlace: { pt: "Brasília/DF", en: "Brasília, Brazil" },
         heroCv: { pt: "Baixar CV", en: "Download CV" },
+        // Arquivos do currículo — precisam estar na mesma pasta do index.html
+        cvFile: {
+          pt: "CV_Victor_Hugo_PT-BR.pdf",
+          en: "CV_Victor_Hugo_EN.pdf",
+        },
 
         secAbout: { pt: "Sobre", en: "About" },
         secSkills: { pt: "Skills", en: "Skills" },
@@ -1107,6 +1118,11 @@
         document.querySelectorAll("[data-i18n-html]").forEach((el) => {
           const s = UI[el.dataset.i18nHtml];
           if (s) el.innerHTML = t(s);
+        });
+        // Links que mudam de destino conforme o idioma (ex.: PDF do currículo)
+        document.querySelectorAll("[data-i18n-href]").forEach((el) => {
+          const s = UI[el.dataset.i18nHref];
+          if (s) el.setAttribute("href", t(s));
         });
 
         document.title = t(UI.docTitle);
