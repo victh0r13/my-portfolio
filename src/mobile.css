@@ -1,0 +1,896 @@
+/* ==========================================================
+     MOBILE — layout próprio para telas de até 720px
+     (barra superior enxuta, abas fixas embaixo e projetos em cards)
+     ========================================================== */
+html:has(.m-app) {
+  scroll-padding-top: 72px;
+}
+/* Dentro da prévia do desktop o celular não mostra barra de rolagem, como num aparelho de verdade */
+html[data-embedded] {
+  scrollbar-width: none;
+}
+html[data-embedded]::-webkit-scrollbar {
+  display: none;
+}
+.m-app {
+  --gutter: 20px;
+  --tabbar-h: 64px;
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 16px);
+  overflow-x: clip;
+}
+
+/* ---------- Barra superior ---------- */
+.m-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) var(--gutter) 10px;
+  background: color-mix(in oklab, var(--bg) 85%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.m-topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+.m-icon-btn {
+  display: grid;
+  place-items: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 8px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  color: var(--muted);
+  font: 500 12px var(--mono);
+  cursor: pointer;
+}
+.m-icon-btn:active {
+  transform: scale(0.94);
+}
+
+/* ---------- Abas fixas embaixo ---------- */
+.m-tabbar {
+  position: fixed;
+  top: auto;
+  left: 12px;
+  right: 12px;
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: var(--tabbar-h);
+  padding: 6px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--bg2) 88%, transparent);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+.m-tabbar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 14px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+.m-tabbar a.active {
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+}
+.m-tabbar a:active {
+  transform: scale(0.94);
+}
+
+/* ---------- Hero ---------- */
+.m-hero,
+#topo.m-hero {
+  position: relative;
+  display: block;
+  padding: 28px var(--gutter) 40px;
+  isolation: isolate;
+}
+/* Brilho verde que flutua sozinho no fundo (no celular não há mouse) */
+.m-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -40px;
+  left: -60px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--accent) 18%, transparent),
+    transparent 65%
+  );
+  animation: drift 12s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  to {
+    transform: translate(120px, 180px) scale(1.15);
+  }
+}
+.m-rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.m-rise:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.m-rise:nth-child(3) {
+  animation-delay: 0.12s;
+}
+.m-rise:nth-child(4) {
+  animation-delay: 0.18s;
+}
+.m-rise:nth-child(5) {
+  animation-delay: 0.24s;
+}
+.m-rise:nth-child(6) {
+  animation-delay: 0.3s;
+}
+.m-rise:nth-child(n + 7) {
+  animation-delay: 0.36s;
+}
+.m-hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.m-hero-top .available {
+  margin: 0;
+  font-size: 12px;
+}
+.m-avatar {
+  flex: none;
+  padding: 2px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0deg,
+    var(--accent) 90deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  animation: spin 5s linear infinite;
+}
+.m-avatar-frame {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 25%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%),
+    var(--bg2);
+  font: 700 24px var(--display);
+  letter-spacing: -0.04em;
+  color: color-mix(in oklab, var(--text) 45%, transparent);
+}
+.m-avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 24%;
+}
+.m-eyebrow {
+  font: 500 14px var(--display);
+  color: var(--accent);
+}
+.m-name {
+  margin-top: 8px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(38px, 11.5vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+.m-name span {
+  color: var(--accent);
+}
+.m-role {
+  margin-top: 12px;
+  min-height: 1.4em;
+  font: 500 19px var(--display);
+  letter-spacing: -0.01em;
+  color: var(--muted);
+}
+.m-role .typed {
+  color: var(--text);
+}
+.m-pitch {
+  margin-top: 14px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.m-place {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.m-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 24px;
+}
+.m-stat {
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--bg2) 80%, transparent);
+}
+.m-stat strong {
+  display: block;
+  font: 700 30px/1 var(--display);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.m-stat span {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.m-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px 20px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 15.5px;
+  transition: transform 0.15s ease;
+}
+.m-btn:active {
+  transform: scale(0.98);
+}
+.m-btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 28%, transparent);
+}
+.m-quick {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+.m-quick a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+.m-quick a:active {
+  border-color: var(--accent);
+  transform: scale(0.97);
+}
+
+/* ---------- Seções ---------- */
+.m-section {
+  padding: 40px var(--gutter) 24px;
+  border-top: 1px solid var(--line);
+}
+.m-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.m-head h2 {
+  font: 700 30px/1.1 var(--display);
+  letter-spacing: -0.03em;
+}
+.m-count {
+  font: 400 12px var(--mono);
+  color: var(--muted);
+}
+.m-lead {
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.m-subhead {
+  margin-top: 36px;
+  font: 700 22px var(--display);
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Índice de projetos: lista compacta que abre no lugar ---------- */
+.m-index {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+.m-index-item {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--bg2);
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+.m-index-item.open {
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--line));
+}
+.m-index-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  scroll-margin-top: 76px;
+  -webkit-tap-highlight-color: transparent;
+}
+.m-index-row:active {
+  background: color-mix(in oklab, var(--text) 4%, transparent);
+}
+.m-index-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background: var(--frame);
+  color: var(--muted);
+  font: 700 14px var(--display);
+  letter-spacing: -0.02em;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+.m-index-item.is-live .m-index-icon {
+  color: var(--live);
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--live) 55%, transparent);
+}
+.m-index-item.open .m-index-icon {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.m-index-text {
+  min-width: 0;
+}
+.m-index-text b {
+  display: block;
+  font: 600 16px/1.25 var(--display);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.m-index-text small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.m-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.m-status-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--live);
+}
+.m-status-live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.35;
+  }
+}
+.m-index-chev {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--muted);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    color 0.3s ease;
+}
+.m-index-item.open .m-index-chev {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+.m-index-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.m-index-item.open .m-index-body {
+  grid-template-rows: 1fr;
+}
+.m-index-body > div {
+  overflow: hidden;
+  min-height: 0;
+}
+.m-index-in {
+  padding: 2px 12px 14px;
+}
+.m-index-in .m-tagline {
+  margin-top: 14px;
+}
+.m-index-in .m-desc {
+  font-size: 14px;
+}
+.m-index-in .m-btn {
+  margin-top: 16px;
+  padding: 13px 18px;
+}
+.m-index .m-shots {
+  margin: 0 -12px;
+  padding: 0 12px;
+}
+.m-index .m-shot-empty {
+  aspect-ratio: 16 / 9;
+}
+.m-index .m-shot-empty strong {
+  font-size: 52px;
+}
+.m-live-preview {
+  position: relative;
+  height: 230px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--frame);
+}
+.m-live-preview iframe {
+  position: absolute;
+  top: 0;
+  border: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+  background: #ffffff;
+}
+.m-live-preview::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 90px;
+  background: linear-gradient(transparent, color-mix(in oklab, var(--bg2) 85%, transparent));
+  pointer-events: none;
+}
+.m-live-open {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  z-index: 1;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font: 600 13.5px var(--body);
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgb(0 0 0 / 0.3);
+}
+.m-dots {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+}
+.m-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  background: var(--line);
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+}
+.m-dots i.on {
+  width: 18px;
+  background: var(--accent);
+}
+.m-meta {
+  font: 500 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* ---------- Gaveta do projeto (sobe de baixo) ---------- */
+.m-sheet {
+  margin: auto 0 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 94dvh;
+  height: 94dvh;
+  padding: 0;
+  border: 0;
+  border-radius: 24px 24px 0 0;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+.m-sheet[open] {
+  animation: sheet-up 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+.m-sheet::backdrop {
+  background: rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(2px);
+}
+.m-sheet-in {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.m-sheet-head {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px var(--gutter, 20px) 14px;
+  border-bottom: 1px solid var(--line);
+}
+.m-sheet-head h3 {
+  margin-top: 4px;
+  font: 700 24px/1.1 var(--display);
+  letter-spacing: -0.02em;
+}
+.m-grabber {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 40px;
+  height: 4px;
+  margin-left: -20px;
+  border-radius: 4px;
+  background: var(--line);
+}
+.m-sheet-body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px var(--gutter, 20px) calc(28px + env(safe-area-inset-bottom, 0px));
+}
+.m-sheet-live {
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--frame);
+}
+.m-sheet-url {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 8px 8px 14px;
+  font: 400 12px var(--mono);
+  color: var(--muted);
+}
+.m-sheet-url span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.m-sheet-url a {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  color: var(--text);
+}
+.m-sheet-live iframe {
+  display: block;
+  width: 100%;
+  height: 58dvh;
+  border: 0;
+  background: #ffffff;
+}
+.m-sheet-live .m-hint {
+  padding: 8px 12px 10px;
+  margin: 0;
+}
+.m-hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.m-shots {
+  display: flex;
+  gap: 12px;
+  margin: 0 calc(var(--gutter, 20px) * -1);
+  padding: 0 var(--gutter, 20px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.m-shots figure {
+  flex: 0 0 88%;
+  scroll-snap-align: center;
+}
+.m-shots img {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--frame);
+}
+.m-shots figcaption {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.m-shot-empty {
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  border: 1px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 60%),
+    var(--bg2);
+}
+.m-shot-empty strong {
+  font: 700 72px var(--display);
+  letter-spacing: -0.05em;
+  color: color-mix(in oklab, var(--text) 18%, transparent);
+}
+.m-shot-empty span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.m-tagline {
+  margin-top: 20px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.m-desc {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.m-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.m-tags span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  font: 400 12px var(--mono);
+}
+
+/* ---------- Carreira ---------- */
+.m-jobs {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+  padding-left: 18px;
+}
+.m-jobs::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: 8px;
+  width: 1.5px;
+  background: linear-gradient(var(--accent), var(--line) 70%);
+}
+.m-job {
+  position: relative;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.m-job::before {
+  content: "";
+  position: absolute;
+  left: -19px;
+  top: 20px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+.m-job-period {
+  font: 400 12px var(--mono);
+  color: var(--muted);
+}
+.m-job h3 {
+  margin-top: 4px;
+  font: 700 17px/1.25 var(--display);
+}
+.m-job-company {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--accent);
+}
+.m-job-desc {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.m-job-desc.expanded {
+  display: block;
+}
+.m-link-btn {
+  margin-top: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: 600 13px var(--body);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.m-stack {
+  display: grid;
+  gap: 18px;
+  margin-top: 14px;
+}
+.m-stack-group p {
+  font: 500 11.5px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.m-stack-group .m-tags {
+  margin-top: 8px;
+}
+
+/* ---------- Sobre e contato ---------- */
+.m-facts {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+.m-facts div {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.m-facts dt {
+  font: 500 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.m-facts dd {
+  margin-top: 3px;
+  font-size: 15px;
+}
+.m-contact-card {
+  position: relative;
+  margin-top: 28px;
+  padding: 22px 18px;
+  border-radius: 22px;
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, var(--line));
+  background:
+    radial-gradient(120% 80% at 0% 0%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%),
+    var(--bg2);
+}
+.m-contact-card h2 {
+  font: 700 26px/1.1 var(--display);
+  letter-spacing: -0.03em;
+}
+.m-contact-card > p {
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.m-channels {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+.m-channels a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--bg) 60%, transparent);
+  font-size: 14.5px;
+  font-weight: 500;
+}
+.m-channels a:first-child {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.m-channels a span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.m-channels a:active {
+  transform: scale(0.98);
+}
+.m-footer {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+}
