@@ -903,3 +903,148 @@ html[data-embedded]::-webkit-scrollbar {
   width: fit-content;
   margin: 0 auto 12px;
 }
+
+/* Print tocável: abre o visualizador em tela cheia */
+.m-shot-open {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+.m-shot-open:active img {
+  transform: scale(0.98);
+}
+.m-shots img {
+  transition: transform 0.2s ease;
+}
+.m-shot-zoom {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--text);
+}
+
+/* ---------- Visualizador de prints em tela cheia ---------- */
+.m-viewer {
+  width: 100vw;
+  height: 100dvh;
+  max-width: 100vw;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #05070a;
+  color: #e8edf2;
+  overflow: hidden;
+}
+.m-viewer[open] {
+  display: flex;
+  flex-direction: column;
+  animation: viewer-in 0.25s ease both;
+}
+@keyframes viewer-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+.m-viewer::backdrop {
+  background: #05070a;
+}
+.m-viewer-head,
+.m-viewer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+}
+.m-viewer-head {
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
+}
+.m-viewer-head b {
+  display: block;
+  font: 600 15px var(--display);
+}
+.m-viewer-head small {
+  font-size: 12.5px;
+  color: #8b96a5;
+}
+.m-viewer-foot {
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.m-viewer-foot p {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: #8b96a5;
+}
+.m-viewer .m-icon-btn {
+  background: #141a21;
+  border-color: #222b35;
+  color: #e8edf2;
+}
+.m-viewer .m-icon-btn:disabled {
+  opacity: 0.35;
+}
+.m-viewer-track {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.m-viewer-track::-webkit-scrollbar {
+  display: none;
+}
+.m-viewer-track.zoomed {
+  overflow-x: hidden;
+}
+.m-viewer-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  scroll-snap-align: center;
+  cursor: zoom-in;
+}
+.m-viewer-slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+/* Ampliado: a imagem fica com a altura da tela (prints largos) ou o dobro da largura (prints em pé) e dá para arrastar */
+.m-viewer-slide.zoomed {
+  display: block;
+  overflow: auto;
+  padding: 0;
+  cursor: zoom-out;
+  scrollbar-width: none;
+}
+.m-viewer-slide.zoomed img {
+  max-width: none;
+  max-height: none;
+  height: 100%;
+  width: auto;
+  border-radius: 0;
+}
+.m-viewer.portrait .m-viewer-slide.zoomed img {
+  height: auto;
+  width: 220%;
+}

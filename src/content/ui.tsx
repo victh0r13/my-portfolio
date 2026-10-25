@@ -75,7 +75,14 @@ export const UI = {
   },
 
   redesign: { pt: "Redesign: compare antes e depois", en: "Redesign: compare before and after" },
-  stageBefore: { pt: "Antes", en: "Before" },
+  previousScreen: { pt: "Tela anterior", en: "Previous screen" },
+  nextScreen: { pt: "Próxima tela", en: "Next screen" },
+  viewerHint: {
+    pt: "Toque na imagem para ampliar e arraste para explorar",
+    en: "Tap the image to zoom and drag to explore",
+  },
+  viewerZoomedHint: { pt: "Toque de novo para voltar ao tamanho normal", en: "Tap again to zoom out" },
+  stageBefore:{ pt: "Antes", en: "Before" },
   stageAfter: { pt: "Depois", en: "After" },
   railLiveGroup:{ pt: "Ao vivo · navegue aqui mesmo", en: "Live · browse right here" },
   previousProject: { pt: "Projeto anterior", en: "Previous project" },

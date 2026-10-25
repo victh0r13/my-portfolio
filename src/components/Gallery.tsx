@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import type { Project, ScreenStage } from "../content/projects";
 import { UI } from "../content/ui";
 import { useLanguage } from "../i18n/LanguageContext";
-import { IconLock } from "./Icons";
+import { IconArrowLeft, IconArrowRight, IconLock } from "./Icons";
 import type { LightboxImage } from "./Lightbox";
 import { StageSwitch } from "./StageSwitch";
 import { assetUrl, hasStages, initials, screensFor } from "../utils/project";
+
+const pad = (value: number) => String(value).padStart(2, "0");
+
+const circularOffset = (i: number, center: number, total: number) => {
+  const half = Math.floor(total / 2);
+  return ((i - center + total + half) % total) - half;
+};
 
 type GalleryProps = {
   project: Project;
@@ -71,23 +78,50 @@ export function Gallery({ project, onZoom, autoplay }: GalleryProps) {
         </div>
       )}
       {portrait ? (
-        <div className="gallery-phones">
-          {screens.map((screen, i) => (
-            <button
-              key={screen.src}
-              type="button"
-              className="gallery-phone"
-              aria-pressed={i === index}
-              aria-label={`${t(UI.zoom)}: ${t(screen.caption)}`}
-              onClick={() => {
-                setIndex(i);
-                zoom(screen);
-              }}
-            >
-              <img src={assetUrl(screen.src)} alt={t(screen.caption)} loading="lazy" />
-              {progress(i)}
-            </button>
-          ))}
+        <div className="phone-flow">
+          <div className="phone-flow-stage">
+            {screens.map((screen, i) => {
+              const offset = circularOffset(i, index, screens.length);
+              const centered = offset === 0;
+              return (
+                <button
+                  key={screen.src}
+                  type="button"
+                  className="phone-flow-item"
+                  aria-current={centered}
+                  aria-label={centered ? `${t(UI.zoom)}: ${t(screen.caption)}` : t(screen.caption)}
+                  style={{ "--offset": offset, "--abs": Math.abs(offset) } as CSSProperties}
+                  onClick={() => (centered ? zoom(screen) : setIndex(i))}
+                >
+                  <img src={assetUrl(screen.src)} alt={t(screen.caption)} loading="lazy" />
+                </button>
+              );
+            })}
+          </div>
+          {screens.length > 1 && (
+            <div className="phone-flow-nav">
+              <button
+                type="button"
+                className="round-btn"
+                aria-label={t(UI.previousScreen)}
+                onClick={() => setIndex((index - 1 + screens.length) % screens.length)}
+              >
+                <IconArrowLeft />
+              </button>
+              <span className="phone-flow-count">
+                <b>{pad(index + 1)}</b> / {pad(screens.length)}
+                {progress(index)}
+              </span>
+              <button
+                type="button"
+                className="round-btn"
+                aria-label={t(UI.nextScreen)}
+                onClick={() => setIndex((index + 1) % screens.length)}
+              >
+                <IconArrowRight />
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <>

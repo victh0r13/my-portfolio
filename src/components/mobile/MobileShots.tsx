@@ -3,14 +3,16 @@ import type { Project, ScreenStage } from "../../content/projects";
 import { UI } from "../../content/ui";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { assetUrl, hasStages, initials, screensFor } from "../../utils/project";
-import { IconLock } from "../Icons";
+import { IconLock, IconZoom } from "../Icons";
 import { StageSwitch } from "../StageSwitch";
+import { ImageViewer } from "./ImageViewer";
 
 export function MobileShots({ project }: { project: Project }) {
   const { t } = useLanguage();
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const [stage, setStage] = useState<ScreenStage>("after");
+  const [viewer, setViewer] = useState<number | null>(null);
   const screens = screensFor(project, stage);
 
   if (!screens.length) {
@@ -48,13 +50,30 @@ export function MobileShots({ project }: { project: Project }) {
         className={`m-shots${project.kind === "mobile" ? " m-shots-portrait" : ""}`}
         onScroll={onScroll}
       >
-        {screens.map((screen) => (
+        {screens.map((screen, i) => (
           <figure key={screen.src}>
-            <img src={assetUrl(screen.src)} alt={t(screen.caption)} loading="lazy" />
+            <button
+              type="button"
+              className="m-shot-open"
+              onClick={() => setViewer(i)}
+              aria-label={`${t(UI.zoom)}: ${t(screen.caption)}`}
+            >
+              <img src={assetUrl(screen.src)} alt={t(screen.caption)} loading="lazy" />
+              <span className="m-shot-zoom" aria-hidden="true">
+                <IconZoom />
+              </span>
+            </button>
             <figcaption>{t(screen.caption)}</figcaption>
           </figure>
         ))}
       </div>
+      <ImageViewer
+        screens={screens}
+        start={viewer}
+        title={t(project.name)}
+        portrait={project.kind === "mobile"}
+        onClose={() => setViewer(null)}
+      />
       {screens.length > 1 && (
         <div className="m-dots" aria-hidden="true">
           {screens.map((screen, i) => (

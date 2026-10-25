@@ -968,13 +968,12 @@ h2 {
   overflow: hidden;
   background: var(--frame);
   cursor: zoom-in;
-  aspect-ratio: 16 / 10.5;
 }
+/* O print ocupa a largura toda e a moldura assume a proporção dele, sem faixas vazias */
 .gallery-main img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
 }
 .thumbs {
   display: flex;
@@ -1578,47 +1577,81 @@ footer {
   background: var(--text);
   color: var(--bg);
 }
-.gallery-phones {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(10px, 2vw, 22px);
+
+/* Apps mobile: carrossel 3D com o celular em destaque no centro e os vizinhos inclinados */
+.phone-flow-stage {
+  position: relative;
   aspect-ratio: 16 / 10.5;
   max-width: 100%;
-  padding: 16px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  perspective: 1400px;
   background:
-    radial-gradient(80% 70% at 50% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 70%),
+    radial-gradient(70% 60% at 50% 10%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%),
+    radial-gradient(60% 40% at 50% 100%, color-mix(in oklab, var(--text) 6%, transparent), transparent 70%),
     var(--frame);
 }
-.gallery-phone {
-  position: relative;
-  height: 100%;
+.phone-flow-item {
+  --abs: 0;
+  --offset: 0;
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  height: 88%;
+  aspect-ratio: 9 / 19.5;
   padding: 0;
   border: 0;
   background: none;
-  cursor: zoom-in;
-  opacity: 0.55;
-  transform: scale(0.94);
+  cursor: pointer;
+  z-index: calc(10 - var(--abs));
+  opacity: calc(1 - var(--abs) * 0.3);
+  filter: brightness(calc(1 - var(--abs) * 0.25));
+  transform: translateX(calc(-50% + var(--offset) * 92%)) scale(calc(1 - var(--abs) * 0.14))
+    rotateY(calc(var(--offset) * -24deg));
   transition:
-    opacity 0.35s ease,
-    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.6s ease,
+    filter 0.6s ease;
 }
-.gallery-phone[aria-pressed="true"],
-.gallery-phone:hover {
-  opacity: 1;
-  transform: none;
+.phone-flow-item[aria-current="true"] {
+  cursor: zoom-in;
 }
-.gallery-phone img {
+.phone-flow-item:not([aria-current="true"]):hover {
+  filter: brightness(1);
+}
+.phone-flow-item img {
+  width: 100%;
   height: 100%;
-  width: auto;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgb(0 0 0 / 0.35);
+  object-fit: cover;
+  object-position: top;
+  border: 5px solid #0b0e13;
+  border-radius: 26px;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--text) 12%, transparent),
+    0 24px 50px rgb(0 0 0 / 0.45);
 }
-.gallery-phone .thumb-progress {
-  left: 14%;
-  right: 14%;
-  bottom: -8px;
-  border-radius: 3px;
+.phone-flow-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+.phone-flow-count {
+  position: relative;
+  min-width: 64px;
+  padding-bottom: 6px;
+  text-align: center;
+  font: 500 12.5px var(--mono);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.phone-flow-count b {
+  color: var(--text);
+  font-weight: 500;
+}
+.phone-flow-count .thumb-progress {
+  height: 2px;
+  border-radius: 2px;
 }

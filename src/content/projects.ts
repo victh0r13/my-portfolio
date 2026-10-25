@@ -147,7 +147,12 @@ export const PROJECTS: Project[] = [
       en: "Desktop app combining Discord-style servers and channels (real-time chat, voice and screen sharing, roles and permissions), an X-style social feed and a game library with artwork from Steam, GOG and SteamGridDB. Co-developed with a partner, with Windows, macOS and Linux installers and auto-update.",
     },
     tags: ["Electron", "Next.js", "ASP.NET Core", "SignalR", "PostgreSQL", "Docker"],
-    screens: [],
+    screens: [
+      { src: "assets/projetos/veche/01.webp", caption: { pt: "Feed da comunidade", en: "Community feed" } },
+      { src: "assets/projetos/veche/02.webp", caption: { pt: "Biblioteca de jogos", en: "Game library" } },
+      { src: "assets/projetos/veche/03.webp", caption: { pt: "Chat do servidor", en: "Server chat" } },
+      { src: "assets/projetos/veche/04.webp", caption: { pt: "Amigos e status", en: "Friends and status" } },
+    ],
   },
 
   {
