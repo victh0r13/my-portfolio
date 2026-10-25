@@ -1,15 +1,20 @@
-import { CONTACT } from "../../content/contact";
+import { CONTACT, whatsappLink } from "../../content/contact";
 import { ABOUT_FACTS } from "../../content/facts";
 import { UI } from "../../content/ui";
 import { useLanguage } from "../../i18n/LanguageContext";
-import { IconCall, IconGithub, IconLinkedin, IconMail } from "../Icons";
+import { IconGithub, IconLinkedin, IconMail, IconWhatsapp } from "../Icons";
 
 export function MobileContact() {
   const { t } = useLanguage();
 
   const channels = [
     { href: `mailto:${CONTACT.email}`, label: CONTACT.email, icon: <IconMail size={20} />, external: false },
-    { href: CONTACT.phoneHref, label: CONTACT.phoneDisplay, icon: <IconCall size={20} />, external: false },
+    {
+      href: whatsappLink(t(UI.whatsappMessage)),
+      label: "WhatsApp",
+      icon: <IconWhatsapp size={20} />,
+      external: true,
+    },
     { href: CONTACT.linkedin, label: "LinkedIn", icon: <IconLinkedin size={20} />, external: true },
     { href: CONTACT.github, label: "GitHub", icon: <IconGithub size={20} />, external: true },
   ];

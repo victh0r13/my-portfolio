@@ -1,8 +1,8 @@
-import { CONTACT } from "../content/contact";
+import { CONTACT, whatsappLink } from "../content/contact";
 import { UI } from "../content/ui";
 import { useReveal } from "../hooks/useReveal";
 import { useLanguage } from "../i18n/LanguageContext";
-import { IconCall, IconMail } from "./Icons";
+import { IconMail, IconWhatsapp } from "./Icons";
 
 export function Contact() {
   const { t } = useLanguage();
@@ -19,9 +19,9 @@ export function Contact() {
             <IconMail />
             {CONTACT.email}
           </a>
-          <a className="btn btn-ghost" href={CONTACT.phoneHref}>
-            <IconCall />
-            {CONTACT.phoneDisplay}
+          <a className="btn btn-ghost" href={whatsappLink(t(UI.whatsappMessage))} target="_blank" rel="noopener">
+            <IconWhatsapp />
+            WhatsApp
           </a>
           <a className="btn btn-ghost" href={CONTACT.linkedin} target="_blank" rel="noopener">
             LinkedIn

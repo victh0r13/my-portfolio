@@ -69,6 +69,10 @@ export const UI = {
   secContact: { pt: "Contato", en: "Contact" },
 
   contactTitle: { pt: "Vamos construir algo juntos?", en: "Shall we build something together?" },
+  whatsappMessage: {
+    pt: "Olá, Victor! Vi seu portfólio e tenho interesse em conversar sobre um projeto.",
+    en: "Hi, Victor! I saw your portfolio and I'd like to talk about a project.",
+  },
   contactLead: {
     pt: "Estou aberto a oportunidades, freelas e boas conversas sobre tecnologia. Me chama por qualquer um dos canais abaixo.",
     en: "I'm open to opportunities, freelance work and good conversations about tech. Reach out through any of the channels below.",
