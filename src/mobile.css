@@ -1083,3 +1083,6 @@ html[data-embedded]::-webkit-scrollbar {
 .m-shots-nav .m-icon-btn:disabled {
   opacity: 0.35;
 }
+.m-shots-portrait.m-shots-tablet figure {
+  flex-basis: 72%;
+}

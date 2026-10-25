@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { PROJECTS, type Project } from "../../content/projects";
-import { KIND_LABEL, UI } from "../../content/ui";
+import { kindLabelOf, UI } from "../../content/ui";
 import { useScaledFrame } from "../../hooks/useScaledFrame";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { assetUrl, initials } from "../../utils/project";
@@ -94,7 +94,7 @@ function IndexItem({ project, open, onToggle, onOpen }: IndexItemProps) {
         <span className="m-index-text">
           <b>{t(project.name)}</b>
           <small>
-            {t(KIND_LABEL[project.kind])} · <Status project={project} />
+            {t(kindLabelOf(project))} · <Status project={project} />
           </small>
         </span>
         <span className="m-index-chev">

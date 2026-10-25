@@ -88,7 +88,9 @@ export function Gallery({ project, onZoom, autoplay }: GalleryProps) {
   };
 
   return (
-    <div className={`gallery${portrait ? " gallery-portrait" : ""}`}>
+    <div
+      className={`gallery${portrait ? " gallery-portrait" : ""}${project.device === "tablet" ? " device-tablet" : ""}`}
+    >
       {staged && (
         <div className="gallery-stage">
           <span>{t(UI.redesign)}</span>

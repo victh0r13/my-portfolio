@@ -1671,3 +1671,13 @@ footer {
   flex: none;
   margin-top: 0;
 }
+/* Apps de tablet: moldura mais larga e vizinhos mais afastados */
+.device-tablet .phone-flow-item {
+  aspect-ratio: 3 / 4;
+  transform: translateX(calc(-50% + var(--offset) * 74%)) scale(calc(1 - var(--abs) * 0.16))
+    rotateY(calc(var(--offset) * -24deg));
+}
+.device-tablet .phone-flow-item img {
+  border-width: 7px;
+  border-radius: 20px;
+}

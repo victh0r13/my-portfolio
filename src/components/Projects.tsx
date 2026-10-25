@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { PROJECTS, type Project } from "../content/projects";
-import { KIND_LABEL, UI } from "../content/ui";
+import { kindLabelOf, UI } from "../content/ui";
 import { useLanguage } from "../i18n/LanguageContext";
 import { Gallery } from "./Gallery";
 import { IconArrowLeft, IconArrowRight, IconExternal, IconLock, IconPause, IconPlay } from "./Icons";
@@ -127,7 +127,7 @@ export function Projects() {
                 {pad(index + 1)} / {pad(PROJECTS.length)}
               </span>
               <span>
-                {t(project.org)} · {t(KIND_LABEL[project.kind])}
+                {t(project.org)} · {t(kindLabelOf(project))}
               </span>
             </div>
             <h3>
@@ -222,7 +222,7 @@ export function Projects() {
               )}
               <b>{t(item.name)}</b>
               <small>
-                {t(KIND_LABEL[item.kind])}
+                {t(kindLabelOf(item))}
                 {item.live && (
                   <>
                     {" · "}

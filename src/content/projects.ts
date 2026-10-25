@@ -21,6 +21,7 @@ export type Project = {
   tags: Localized[];
   screens: ProjectScreen[];
   logo?: string;
+  device?: "phone" | "tablet";
 };
 
 // live:    'https://...'  → mostra o site navegável dentro de uma moldura (iframe)
@@ -31,6 +32,7 @@ export type Project = {
 //          Lista vazia → aparece o aviso "telas em preparação".
 //          stage: "before" | "after" → em redesigns, a galeria ganha a troca Antes/Depois
 //          (abre no "Depois"; as telas sem stage aparecem sempre).
+// device:  "tablet" ajusta a moldura dos prints de apps (padrão: celular).
 // logo:    ícone quadrado do projeto em public/assets/logos/ (sem logo, aparecem as iniciais).
 // A ordem desta lista é a ordem da vitrine: sites ao vivo e projetos pessoais primeiro.
 export const PROJECTS: Project[] = [
@@ -101,15 +103,21 @@ export const PROJECTS: Project[] = [
     live: null,
     link: null,
     tagline: {
-      pt: "Catálogo em tablet com consultor por IA",
-      en: "Tablet catalog with an AI consultant",
+      pt: "Totem em tablet com quiz para descobrir o perfume",
+      en: "Tablet kiosk with a quiz to find the right perfume",
     },
     desc: {
-      pt: "Catálogo em tablet com filtros olfativos e consultor virtual por IA (Claude API), com sincronização de produtos via Bling ERP v3 sobre OAuth 2.0.",
-      en: "Tablet catalog with olfactory filters and an AI virtual consultant (Claude API), syncing products through Bling ERP v3 over OAuth 2.0.",
+      pt: "Totem para a loja com tela de descanso que gira os perfumes do catálogo, quiz por toques que recomenda a fragrância para quem não sabe o que quer e catálogo com filtros por família olfativa, gênero e preço para quem já tem uma ideia. Escolhi o quiz no lugar de um agente de IA porque no totem tocar é mais natural do que digitar. Produtos sincronizados com o Bling ERP v3 via OAuth 2.0.",
+      en: "In-store kiosk with an idle screen that rotates perfumes from the catalog, a tap-based quiz that recommends a fragrance for undecided customers and a catalog with filters by scent family, gender and price for those who already have an idea. I chose a quiz over an AI agent because tapping feels more natural than typing on a kiosk. Products are synced with Bling ERP v3 over OAuth 2.0.",
     },
-    tags: ["React Native", "Expo", "Claude API", "OAuth 2.0"],
-    screens: [],
+    tags: ["React Native", "Expo", "Bling ERP", "OAuth 2.0"],
+    device: "tablet",
+    screens: [
+      { src: "assets/projetos/totem-le-parfum/01.webp", caption: { pt: "Tela de descanso", en: "Idle screen" } },
+      { src: "assets/projetos/totem-le-parfum/02.webp", caption: { pt: "Início", en: "Home" } },
+      { src: "assets/projetos/totem-le-parfum/03.webp", caption: { pt: "Quiz de descoberta", en: "Discovery quiz" } },
+      { src: "assets/projetos/totem-le-parfum/04.webp", caption: { pt: "Catálogo com filtros", en: "Filtered catalog" } },
+    ],
   },
 
   {

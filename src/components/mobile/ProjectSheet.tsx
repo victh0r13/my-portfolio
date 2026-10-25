@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { Project } from "../../content/projects";
-import { KIND_LABEL, UI } from "../../content/ui";
+import { kindLabelOf, UI } from "../../content/ui";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { IconClose, IconExternal } from "../Icons";
 import { displayAddress } from "../LiveFrame";
@@ -63,7 +63,7 @@ export function ProjectSheet({ project, onClose }: ProjectSheetProps) {
             <span className="m-grabber" />
             <div>
               <p className="m-meta">
-                {t(project.org)} · {t(KIND_LABEL[project.kind])}
+                {t(project.org)} · {t(kindLabelOf(project))}
               </p>
               <h3>{t(project.name)}</h3>
             </div>

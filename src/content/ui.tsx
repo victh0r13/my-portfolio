@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Localized } from "../i18n/types";
+import type { Project } from "./projects";
 
 export const UI = {
   navProjects: { pt: "Projetos", en: "Projects" },
@@ -98,6 +99,7 @@ export const UI = {
   kindWeb: "Web",
   kindMobile: "Mobile",
   kindDesktop: "Desktop",
+  kindTablet: "Tablet",
   accessPublic: { pt: "Públicos", en: "Public" },
   accessPrivate: { pt: "Privados", en: "Private" },
   badgeLive: { pt: "Ao vivo", en: "Live" },
@@ -172,3 +174,6 @@ export const RICH_TEXT = {
 } satisfies Record<string, Localized<ReactNode>>;
 
 export const KIND_LABEL = { web: UI.kindWeb, mobile: UI.kindMobile, desktop: UI.kindDesktop };
+
+export const kindLabelOf = (project: Pick<Project, "kind" | "device">) =>
+  project.device === "tablet" ? UI.kindTablet : KIND_LABEL[project.kind];

@@ -62,7 +62,7 @@ export function MobileShots({ project }: { project: Project }) {
       )}
       <div
         ref={trackRef}
-        className={`m-shots${project.kind === "mobile" ? " m-shots-portrait" : ""}`}
+        className={`m-shots${project.kind === "mobile" ? " m-shots-portrait" : ""}${project.device === "tablet" ? " m-shots-tablet" : ""}`}
         onScroll={onScroll}
       >
         {screens.map((screen, i) => (
