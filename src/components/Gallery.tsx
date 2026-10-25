@@ -1,10 +1,11 @@
 import { useState } from "react";
-import type { Project } from "../content/projects";
+import type { Project, ScreenStage } from "../content/projects";
 import { UI } from "../content/ui";
 import { useLanguage } from "../i18n/LanguageContext";
 import { IconLock } from "./Icons";
 import type { LightboxImage } from "./Lightbox";
-import { assetUrl, initials } from "../utils/project";
+import { StageSwitch } from "./StageSwitch";
+import { assetUrl, hasStages, initials, screensFor } from "../utils/project";
 
 type GalleryProps = {
   project: Project;
@@ -15,9 +16,12 @@ type GalleryProps = {
 export function Gallery({ project, onZoom, autoplay }: GalleryProps) {
   const { t } = useLanguage();
   const [index, setIndex] = useState(0);
+  const [stage, setStage] = useState<ScreenStage>("after");
   const isPrivate = project.access === "private";
+  const staged = hasStages(project);
+  const screens = screensFor(project, stage);
 
-  if (!project.screens.length) {
+  if (!screens.length) {
     return (
       <div className="placeholder">
         <strong>{initials(t(project.name))}</strong>
@@ -29,46 +33,85 @@ export function Gallery({ project, onZoom, autoplay }: GalleryProps) {
     );
   }
 
-  const current = project.screens[index];
-  const cycling = autoplay !== undefined && project.screens.length > 1;
+  const current = screens[Math.min(index, screens.length - 1)];
+  const cycling = autoplay !== undefined && screens.length > 1;
+  const portrait = project.kind === "mobile";
 
-  const zoom = () =>
+  const zoom = (screen = current) =>
     onZoom({
-      src: assetUrl(current.src),
-      alt: t(current.caption),
-      caption: `${t(project.name)} · ${t(current.caption)}`,
+      src: assetUrl(screen.src),
+      alt: t(screen.caption),
+      caption: `${t(project.name)} · ${t(screen.caption)}`,
     });
 
+  const progress = (i: number) =>
+    cycling &&
+    i === index && (
+      <span
+        className="thumb-progress"
+        style={{
+          animationDuration: `${autoplay.intervalMs}ms`,
+          animationPlayState: autoplay.paused ? "paused" : "running",
+        }}
+        onAnimationEnd={() => setIndex((index + 1) % screens.length)}
+      />
+    );
+
+  const changeStage = (next: ScreenStage) => {
+    setStage(next);
+    setIndex(0);
+  };
+
   return (
-    <div className="gallery">
-      <button type="button" className="gallery-main" aria-label={t(UI.zoom)} onClick={zoom}>
-        <img key={current.src} src={assetUrl(current.src)} alt={t(current.caption)} loading="lazy" />
-      </button>
-      {project.screens.length > 1 && (
-        <div className="thumbs">
-          {project.screens.map((screen, i) => (
+    <div className={`gallery${portrait ? " gallery-portrait" : ""}`}>
+      {staged && (
+        <div className="gallery-stage">
+          <span>{t(UI.redesign)}</span>
+          <StageSwitch className="stage-switch" stage={stage} onChange={changeStage} />
+        </div>
+      )}
+      {portrait ? (
+        <div className="gallery-phones">
+          {screens.map((screen, i) => (
             <button
               key={screen.src}
               type="button"
-              className="thumb"
+              className="gallery-phone"
               aria-pressed={i === index}
-              aria-label={t(screen.caption)}
-              onClick={() => setIndex(i)}
+              aria-label={`${t(UI.zoom)}: ${t(screen.caption)}`}
+              onClick={() => {
+                setIndex(i);
+                zoom(screen);
+              }}
             >
-              <img src={assetUrl(screen.src)} alt="" loading="lazy" />
-              {cycling && i === index && (
-                <span
-                  className="thumb-progress"
-                  style={{
-                    animationDuration: `${autoplay.intervalMs}ms`,
-                    animationPlayState: autoplay.paused ? "paused" : "running",
-                  }}
-                  onAnimationEnd={() => setIndex((index + 1) % project.screens.length)}
-                />
-              )}
+              <img src={assetUrl(screen.src)} alt={t(screen.caption)} loading="lazy" />
+              {progress(i)}
             </button>
           ))}
         </div>
+      ) : (
+        <>
+          <button type="button" className="gallery-main" aria-label={t(UI.zoom)} onClick={() => zoom()}>
+            <img key={current.src} src={assetUrl(current.src)} alt={t(current.caption)} loading="lazy" />
+          </button>
+          {screens.length > 1 && (
+            <div className="thumbs">
+              {screens.map((screen, i) => (
+                <button
+                  key={screen.src}
+                  type="button"
+                  className="thumb"
+                  aria-pressed={i === index}
+                  aria-label={t(screen.caption)}
+                  onClick={() => setIndex(i)}
+                >
+                  <img src={assetUrl(screen.src)} alt="" loading="lazy" />
+                  {progress(i)}
+                </button>
+              ))}
+            </div>
+          )}
+        </>
       )}
       <div className="gallery-cap">
         <span>{t(current.caption)}</span>

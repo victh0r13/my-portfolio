@@ -1,16 +1,19 @@
 import { useRef, useState } from "react";
-import type { Project } from "../../content/projects";
+import type { Project, ScreenStage } from "../../content/projects";
 import { UI } from "../../content/ui";
 import { useLanguage } from "../../i18n/LanguageContext";
-import { assetUrl, initials } from "../../utils/project";
+import { assetUrl, hasStages, initials, screensFor } from "../../utils/project";
 import { IconLock } from "../Icons";
+import { StageSwitch } from "../StageSwitch";
 
 export function MobileShots({ project }: { project: Project }) {
   const { t } = useLanguage();
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
+  const [stage, setStage] = useState<ScreenStage>("after");
+  const screens = screensFor(project, stage);
 
-  if (!project.screens.length) {
+  if (!screens.length) {
     return (
       <div className="m-shot-empty">
         <strong>{initials(t(project.name))}</strong>
@@ -29,19 +32,32 @@ export function MobileShots({ project }: { project: Project }) {
     setCurrent(Math.round(track.scrollLeft / first.offsetWidth));
   };
 
+  const changeStage = (next: ScreenStage) => {
+    setStage(next);
+    setCurrent(0);
+    trackRef.current?.scrollTo({ left: 0 });
+  };
+
   return (
     <div>
-      <div ref={trackRef} className="m-shots" onScroll={onScroll}>
-        {project.screens.map((screen) => (
+      {hasStages(project) && (
+        <StageSwitch className="stage-switch m-stage-switch" stage={stage} onChange={changeStage} />
+      )}
+      <div
+        ref={trackRef}
+        className={`m-shots${project.kind === "mobile" ? " m-shots-portrait" : ""}`}
+        onScroll={onScroll}
+      >
+        {screens.map((screen) => (
           <figure key={screen.src}>
             <img src={assetUrl(screen.src)} alt={t(screen.caption)} loading="lazy" />
             <figcaption>{t(screen.caption)}</figcaption>
           </figure>
         ))}
       </div>
-      {project.screens.length > 1 && (
+      {screens.length > 1 && (
         <div className="m-dots" aria-hidden="true">
-          {project.screens.map((screen, i) => (
+          {screens.map((screen, i) => (
             <i key={screen.src} className={i === current ? "on" : undefined} />
           ))}
         </div>

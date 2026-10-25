@@ -732,7 +732,7 @@ h2 {
 .sc-rail button.is-live::before {
   background: color-mix(in oklab, var(--live) 40%, var(--line));
 }
-.sc-rail button.is-live small {
+.sc-rail .live-word {
   color: var(--live);
 }
 .sc-rail button:hover,
@@ -1540,4 +1540,85 @@ footer {
 .mp-prompt-close:hover {
   color: var(--text);
   background: color-mix(in oklab, var(--text) 8%, transparent);
+}
+
+/* ---------- Galeria: troca Antes/Depois em redesigns e telas de celular lado a lado ---------- */
+.gallery-stage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  font: 500 11.5px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.stage-switch {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+}
+.stage-switch button {
+  padding: 5px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font: 600 12.5px var(--body);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.stage-switch button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+}
+.gallery-phones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 22px);
+  aspect-ratio: 16 / 10.5;
+  max-width: 100%;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background:
+    radial-gradient(80% 70% at 50% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 70%),
+    var(--frame);
+}
+.gallery-phone {
+  position: relative;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  opacity: 0.55;
+  transform: scale(0.94);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.gallery-phone[aria-pressed="true"],
+.gallery-phone:hover {
+  opacity: 1;
+  transform: none;
+}
+.gallery-phone img {
+  height: 100%;
+  width: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.35);
+}
+.gallery-phone .thumb-progress {
+  left: 14%;
+  right: 14%;
+  bottom: -8px;
+  border-radius: 3px;
 }

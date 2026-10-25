@@ -74,7 +74,10 @@ export const UI = {
     en: "I'm open to opportunities, freelance work and good conversations about tech. Reach out through any of the channels below.",
   },
 
-  railLiveGroup: { pt: "Ao vivo · navegue aqui mesmo", en: "Live · browse right here" },
+  redesign: { pt: "Redesign: compare antes e depois", en: "Redesign: compare before and after" },
+  stageBefore: { pt: "Antes", en: "Before" },
+  stageAfter: { pt: "Depois", en: "After" },
+  railLiveGroup:{ pt: "Ao vivo · navegue aqui mesmo", en: "Live · browse right here" },
   previousProject: { pt: "Projeto anterior", en: "Previous project" },
   nextProject: { pt: "Próximo projeto", en: "Next project" },
   pauseShowcase: { pt: "Pausar a troca automática", en: "Pause autoplay" },

@@ -1,3 +1,5 @@
+import type { Project, ScreenStage } from "../content/projects";
+
 export const assetUrl = (src: string) => `${import.meta.env.BASE_URL}${src}`;
 
 export function initials(name: string) {
@@ -10,3 +12,8 @@ export function initials(name: string) {
     .join("");
   return letters || name[0].toUpperCase();
 }
+
+export const hasStages = (project: Project) => project.screens.some((screen) => screen.stage);
+
+export const screensFor = (project: Project, stage: ScreenStage) =>
+  project.screens.filter((screen) => !screen.stage || screen.stage === stage);

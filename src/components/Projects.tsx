@@ -6,6 +6,7 @@ import { Gallery } from "./Gallery";
 import { IconArrowLeft, IconArrowRight, IconExternal, IconLock, IconPause, IconPlay } from "./Icons";
 import { Lightbox, type LightboxImage } from "./Lightbox";
 import { LiveFrame } from "./LiveFrame";
+import { screensFor } from "../utils/project";
 
 const LIVE_DWELL_MS = 9000;
 const PROJECT_DWELL_MS = 8000;
@@ -14,7 +15,7 @@ const SCREEN_DWELL_MS = 4000;
 const dwellOf = (project: Project) =>
   project.live
     ? LIVE_DWELL_MS
-    : Math.max(PROJECT_DWELL_MS, project.screens.length * SCREEN_DWELL_MS);
+    : Math.max(PROJECT_DWELL_MS, screensFor(project, "after").length * SCREEN_DWELL_MS);
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
@@ -188,7 +189,7 @@ export function Projects() {
                 <Gallery
                   project={project}
                   onZoom={setZoomed}
-                  autoplay={{ intervalMs: dwell / Math.max(1, project.screens.length), paused }}
+                  autoplay={{ intervalMs: dwell / Math.max(1, screensFor(project, "after").length), paused }}
                 />
               )}
             </div>
@@ -222,7 +223,12 @@ export function Projects() {
               <b>{t(item.name)}</b>
               <small>
                 {t(KIND_LABEL[item.kind])}
-                {item.live ? ` · ${t(UI.badgeLive).toLowerCase()}` : ""}
+                {item.live && (
+                  <>
+                    {" · "}
+                    <span className="live-word">{t(UI.badgeLive).toLowerCase()}</span>
+                  </>
+                )}
               </small>
             </button>
           ))}

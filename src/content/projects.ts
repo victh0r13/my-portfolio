@@ -4,7 +4,9 @@ export type ProjectKind = "web" | "mobile" | "desktop";
 
 export type ProjectAccess = "private" | "public";
 
-export type ProjectScreen = { src: string; caption: Localized };
+export type ScreenStage = "before" | "after";
+
+export type ProjectScreen = { src: string; caption: Localized; stage?: ScreenStage };
 
 export type Project = {
   id: string;
@@ -26,6 +28,8 @@ export type Project = {
 //          public/assets/projetos/<id>/ e liste aqui, ex.:
 //          { src: "assets/projetos/prontobook/01.webp", caption: { pt: "Faturamento", en: "Billing" } }
 //          Lista vazia → aparece o aviso "telas em preparação".
+//          stage: "before" | "after" → em redesigns, a galeria ganha a troca Antes/Depois
+//          (abre no "Depois"; as telas sem stage aparecem sempre).
 // A ordem desta lista é a ordem da vitrine: sites ao vivo e projetos pessoais primeiro.
 export const PROJECTS: Project[] = [
   {
@@ -119,7 +123,11 @@ export const PROJECTS: Project[] = [
       en: "Works offline via AsyncStorage and consumes a REST API. One of two complete apps I delivered for an internal Level33 technical review that asked each developer for one.",
     },
     tags: ["React Native", "Expo", "AsyncStorage"],
-    screens: [],
+    screens: [
+      { src: "assets/projetos/biblia-offline/01.webp", caption: { pt: "Início com o versículo do dia", en: "Home with the verse of the day" } },
+      { src: "assets/projetos/biblia-offline/02.webp", caption: { pt: "Lista de livros", en: "Book list" } },
+      { src: "assets/projetos/biblia-offline/03.webp", caption: { pt: "Leitura do capítulo", en: "Chapter reading" } },
+    ],
   },
 
   {
@@ -156,43 +164,56 @@ export const PROJECTS: Project[] = [
       en: "Led the system's complete UI/UX refactor and work on implementing new flows and fixing broken legacy flows, from backend to frontend.",
     },
     tags: ["Node.js", "TypeScript", "React", "Prisma", "PostgreSQL"],
-    screens: [],
+    screens: [
+      { src: "assets/projetos/prontobook/antes-01.webp", caption: { pt: "Login antigo", en: "Old login" }, stage: "before" },
+      { src: "assets/projetos/prontobook/antes-02.webp", caption: { pt: "Dashboard antigo", en: "Old dashboard" }, stage: "before" },
+      { src: "assets/projetos/prontobook/depois-01.webp", caption: { pt: "Novo login", en: "New login" }, stage: "after" },
+      { src: "assets/projetos/prontobook/depois-02.webp", caption: { pt: "Novo dashboard", en: "New dashboard" }, stage: "after" },
+    ],
   },
 
   {
-    id: "df-legal",
-    name: "DF Legal",
+    id: "cbmerj",
+    name: { pt: "Painel CBMERJ", en: "CBMERJ admin panel" },
     org: "Level33",
     kind: "web",
     access: "private",
     live: null,
     link: null,
     tagline: {
-      pt: "Licenciamento e cobrança de taxas públicas do DF",
-      en: "Licensing and public fee collection for the Federal District",
+      pt: "Redesign para o Corpo de Bombeiros do RJ",
+      en: "Redesign for the Rio de Janeiro Fire Department",
     },
     desc: {
-      pt: "Integração com o SISLANCA, sistema de lançamentos tributários do governo, com histórico de tentativas, regras de isenção e motivos conforme a LC 783/2008; suspensão e encerramento de lançamentos, declarações com numeração própria e validação de CPF/CNPJ no backend.",
-      en: "Integration with the government tax-assessment system (SISLANCA), with attempt history, exemption rules and legally compliant reasons; assessment suspension and closing, self-numbered declarations and server-side CPF/CNPJ validation.",
+      pt: "Recriei do zero o painel administrativo do Corpo de Bombeiros Militar do RJ sobre o backend existente: novo login, navegação agrupada por tarefa e um painel inicial com os números que a equipe acompanha no dia a dia.",
+      en: "Rebuilt from scratch the admin panel for the Rio de Janeiro State Fire Department on top of the existing backend: a new login, task-grouped navigation and a home dashboard with the numbers the team tracks every day.",
     },
-    tags: ["React", "C# / .NET 8", "Entity Framework Core"],
-    screens: [],
+    tags: ["React", "TypeScript", "UI/UX"],
+    screens: [
+      { src: "assets/projetos/cbmerj/antes-01.webp", caption: { pt: "Login antigo", en: "Old login" }, stage: "before" },
+      { src: "assets/projetos/cbmerj/antes-02.webp", caption: { pt: "Painel antigo", en: "Old dashboard" }, stage: "before" },
+      { src: "assets/projetos/cbmerj/depois-01.webp", caption: { pt: "Novo login", en: "New login" }, stage: "after" },
+      { src: "assets/projetos/cbmerj/depois-02.webp", caption: { pt: "Novo painel", en: "New dashboard" }, stage: "after" },
+    ],
   },
 
   {
-    id: "menu-na-mao",
-    name: "Menu na Mão",
+    id: "monitoramento-app",
+    name: { pt: "App de Monitoramento", en: "Monitoring app" },
     org: "Level33",
-    kind: "web",
+    kind: "mobile",
     access: "private",
     live: null,
     link: null,
-    tagline: { pt: "ERP multi-tenant para restaurantes", en: "Multi-tenant restaurant ERP" },
-    desc: {
-      pt: "Cadeia de suprimentos (fornecedores, compras e estoque), módulos de Implantação e Auditoria, comandas com divisão parcial de itens, gorjeta e controle de ponto com banco de horas entre períodos.",
-      en: "Supply chain (suppliers, purchasing, stock), Onboarding and Audit modules, order tabs with partial item splitting, tips and time tracking with an hour bank across periods.",
+    tagline: {
+      pt: "App mobile do CBMERJ recriado do zero",
+      en: "CBMERJ mobile app rebuilt from scratch",
     },
-    tags: ["Next.js", "C# / .NET 8", "Tailwind"],
+    desc: {
+      pt: "App de monitoramento em React Native (Expo) recriado do zero junto com o redesign do painel do Corpo de Bombeiros do RJ.",
+      en: "React Native (Expo) monitoring app rebuilt from scratch alongside the Rio de Janeiro Fire Department panel redesign.",
+    },
+    tags: ["React Native", "Expo"],
     screens: [],
   },
 
@@ -210,26 +231,6 @@ export const PROJECTS: Project[] = [
       en: "I work on 6 React Native (Expo) apps with offline-first architecture, background sync and a trusted-time service for auditable timestamps, from implementation to Android staging and production builds.",
     },
     tags: ["React Native", "Expo", "SQLite", "Offline-first"],
-    screens: [],
-  },
-
-  {
-    id: "cbmerj",
-    name: { pt: "Painel CBMERJ", en: "CBMERJ admin panel" },
-    org: "Level33",
-    kind: "web",
-    access: "private",
-    live: null,
-    link: null,
-    tagline: {
-      pt: "Redesign para o Corpo de Bombeiros do RJ",
-      en: "Redesign for the Rio de Janeiro Fire Department",
-    },
-    desc: {
-      pt: "Recriei do zero o painel administrativo do Corpo de Bombeiros Militar do RJ sobre o backend existente e o app mobile de monitoramento em Expo, ambos entregues.",
-      en: "Rebuilt from scratch the admin panel for the Rio de Janeiro State Fire Department on top of the existing backend, and the Expo monitoring app, both delivered.",
-    },
-    tags: ["React", "React Native", "Expo", "UI/UX"],
     screens: [],
   },
 ];
