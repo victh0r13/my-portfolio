@@ -1655,3 +1655,19 @@ footer {
   height: 2px;
   border-radius: 2px;
 }
+/* Miniaturas à esquerda e setas com o contador à direita */
+.thumbs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 10px;
+}
+.thumbs-row .thumbs {
+  margin-top: 0;
+  min-width: 0;
+}
+.thumbs-row .phone-flow-nav {
+  flex: none;
+  margin-top: 0;
+}

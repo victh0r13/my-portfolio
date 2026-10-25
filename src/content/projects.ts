@@ -20,6 +20,7 @@ export type Project = {
   desc: Localized;
   tags: Localized[];
   screens: ProjectScreen[];
+  logo?: string;
 };
 
 // live:    'https://...'  → mostra o site navegável dentro de uma moldura (iframe)
@@ -30,6 +31,7 @@ export type Project = {
 //          Lista vazia → aparece o aviso "telas em preparação".
 //          stage: "before" | "after" → em redesigns, a galeria ganha a troca Antes/Depois
 //          (abre no "Depois"; as telas sem stage aparecem sempre).
+// logo:    ícone quadrado do projeto em public/assets/logos/ (sem logo, aparecem as iniciais).
 // A ordem desta lista é a ordem da vitrine: sites ao vivo e projetos pessoais primeiro.
 export const PROJECTS: Project[] = [
   {
@@ -88,6 +90,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "totem-le-parfum",
+    logo: "assets/logos/totem-le-parfum.png",
     name: { pt: "Totem Le Parfum", en: "Le Parfum kiosk" },
     org: "Le Parfum",
     kind: "mobile",
@@ -108,6 +111,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "biblia-offline",
+    logo: "assets/logos/biblia-offline.svg",
     name: { pt: "Bíblia offline", en: "Offline Bible" },
     org: { pt: "Avaliação técnica", en: "Technical review" },
     kind: "mobile",
@@ -132,6 +136,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "veche",
+    logo: "assets/logos/veche.png",
     name: "Veche",
     org: { pt: "Projeto pessoal", en: "Personal project" },
     kind: "desktop",
@@ -157,6 +162,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "prontobook",
+    logo: "assets/logos/prontobook.png",
     name: "Prontobook",
     org: "Level33",
     kind: "web",
@@ -179,6 +185,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "cbmerj",
+    logo: "assets/logos/cbmerj.png",
     name: { pt: "Painel CBMERJ", en: "CBMERJ admin panel" },
     org: "Level33",
     kind: "web",
@@ -204,6 +211,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "monitoramento-app",
+    logo: "assets/logos/monitoramento-app.png",
     name: { pt: "App de Monitoramento", en: "Monitoring app" },
     org: "Level33",
     kind: "mobile",
@@ -232,8 +240,8 @@ export const PROJECTS: Project[] = [
     link: null,
     tagline: "VISA-DF, VigDigital, DER-RJ, SUBAS, IUBAAM",
     desc: {
-      pt: "Atuo em 6 apps React Native (Expo) com arquitetura offline-first, sincronização em segundo plano e serviço de hora confiável para timestamps auditáveis, da implementação aos builds Android de homologação e produção.",
-      en: "I work on 6 React Native (Expo) apps with offline-first architecture, background sync and a trusted-time service for auditable timestamps, from implementation to Android staging and production builds.",
+      pt: "Atuo em 10+ apps React Native (Expo) com arquitetura offline-first, sincronização em segundo plano e serviço de hora confiável para timestamps auditáveis, da implementação aos builds Android de homologação e produção.",
+      en: "I work on 10+ React Native (Expo) apps with offline-first architecture, background sync and a trusted-time service for auditable timestamps, from implementation to Android staging and production builds.",
     },
     tags: ["React Native", "Expo", "SQLite", "Offline-first"],
     screens: [],

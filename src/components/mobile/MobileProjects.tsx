@@ -3,7 +3,7 @@ import { PROJECTS, type Project } from "../../content/projects";
 import { KIND_LABEL, UI } from "../../content/ui";
 import { useScaledFrame } from "../../hooks/useScaledFrame";
 import { useLanguage } from "../../i18n/LanguageContext";
-import { initials } from "../../utils/project";
+import { assetUrl, initials } from "../../utils/project";
 import { IconArrowRight, IconChevron, IconCursor, IconLock } from "../Icons";
 import { FRAME_WIDTH } from "../LiveFrame";
 import { MobileShots } from "./MobileShots";
@@ -88,8 +88,8 @@ function IndexItem({ project, open, onToggle, onOpen }: IndexItemProps) {
       className={["m-index-item", open ? "open" : "", project.live ? "is-live" : ""].join(" ").trim()}
     >
       <button ref={rowRef} type="button" className="m-index-row" aria-expanded={open} onClick={toggle}>
-        <span className="m-index-icon" aria-hidden="true">
-          {initials(t(project.name))}
+        <span className={`m-index-icon${project.logo ? " has-logo" : ""}`} aria-hidden="true">
+          {project.logo ? <img src={assetUrl(project.logo)} alt="" /> : initials(t(project.name))}
         </span>
         <span className="m-index-text">
           <b>{t(project.name)}</b>

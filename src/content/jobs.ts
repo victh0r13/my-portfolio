@@ -13,8 +13,8 @@ export const JOBS: Job[] = [
     role: { pt: "Desenvolvedor Full Stack e Mobile", en: "Full Stack & Mobile Developer" },
     company: "Level33",
     desc: {
-      pt: "14+ sistemas web e mobile em produção para o setor público (saúde, tributação, vigilância sanitária, meio ambiente, transporte e bombeiros) e empresas privadas. Atuação ponta a ponta, no front e no back: análise de requisitos, implementação, correção de bugs e testes, com merge requests revisados no GitLab e builds Android de homologação e produção em 6+ apps React Native.",
-      en: "14+ web and mobile systems in production for the public sector (healthcare, taxation, health inspection, environment, transportation, fire department) and private companies. End-to-end work, front and back: requirements analysis, implementation, bug fixing and testing, with reviewed merge requests on GitLab and Android staging and production builds across 6+ React Native apps.",
+      pt: "20+ sistemas web e mobile em produção para o setor público (saúde, tributação, vigilância sanitária, meio ambiente, transporte e bombeiros) e empresas privadas. Atuação ponta a ponta, no front e no back: análise de requisitos, implementação, correção de bugs e testes, com merge requests revisados no GitLab e builds Android de homologação e produção em 10+ apps React Native.",
+      en: "20+ web and mobile systems in production for the public sector (healthcare, taxation, health inspection, environment, transportation, fire department) and private companies. End-to-end work, front and back: requirements analysis, implementation, bug fixing and testing, with reviewed merge requests on GitLab and Android staging and production builds across 10+ React Native apps.",
     },
   },
   {

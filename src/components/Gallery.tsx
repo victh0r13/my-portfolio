@@ -64,6 +64,24 @@ export function Gallery({ project, onZoom, autoplay }: GalleryProps) {
       />
     );
 
+  const step = (delta: number) => setIndex((index + delta + screens.length) % screens.length);
+
+  const nav = (withProgress: boolean) =>
+    screens.length > 1 && (
+      <div className="phone-flow-nav">
+        <button type="button" className="round-btn" aria-label={t(UI.previousScreen)} onClick={() => step(-1)}>
+          <IconArrowLeft />
+        </button>
+        <span className="phone-flow-count">
+          <b>{pad(index + 1)}</b> / {pad(screens.length)}
+          {withProgress && progress(index)}
+        </span>
+        <button type="button" className="round-btn" aria-label={t(UI.nextScreen)} onClick={() => step(1)}>
+          <IconArrowRight />
+        </button>
+      </div>
+    );
+
   const changeStage = (next: ScreenStage) => {
     setStage(next);
     setIndex(0);
@@ -98,30 +116,7 @@ export function Gallery({ project, onZoom, autoplay }: GalleryProps) {
               );
             })}
           </div>
-          {screens.length > 1 && (
-            <div className="phone-flow-nav">
-              <button
-                type="button"
-                className="round-btn"
-                aria-label={t(UI.previousScreen)}
-                onClick={() => setIndex((index - 1 + screens.length) % screens.length)}
-              >
-                <IconArrowLeft />
-              </button>
-              <span className="phone-flow-count">
-                <b>{pad(index + 1)}</b> / {pad(screens.length)}
-                {progress(index)}
-              </span>
-              <button
-                type="button"
-                className="round-btn"
-                aria-label={t(UI.nextScreen)}
-                onClick={() => setIndex((index + 1) % screens.length)}
-              >
-                <IconArrowRight />
-              </button>
-            </div>
-          )}
+          {nav(true)}
         </div>
       ) : (
         <>
@@ -129,20 +124,23 @@ export function Gallery({ project, onZoom, autoplay }: GalleryProps) {
             <img key={current.src} src={assetUrl(current.src)} alt={t(current.caption)} loading="lazy" />
           </button>
           {screens.length > 1 && (
-            <div className="thumbs">
-              {screens.map((screen, i) => (
-                <button
-                  key={screen.src}
-                  type="button"
-                  className="thumb"
-                  aria-pressed={i === index}
-                  aria-label={t(screen.caption)}
-                  onClick={() => setIndex(i)}
-                >
-                  <img src={assetUrl(screen.src)} alt="" loading="lazy" />
-                  {progress(i)}
-                </button>
-              ))}
+            <div className="thumbs-row">
+              <div className="thumbs">
+                {screens.map((screen, i) => (
+                  <button
+                    key={screen.src}
+                    type="button"
+                    className="thumb"
+                    aria-pressed={i === index}
+                    aria-label={t(screen.caption)}
+                    onClick={() => setIndex(i)}
+                  >
+                    <img src={assetUrl(screen.src)} alt="" loading="lazy" />
+                    {progress(i)}
+                  </button>
+                ))}
+              </div>
+              {nav(false)}
             </div>
           )}
         </>

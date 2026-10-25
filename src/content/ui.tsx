@@ -119,8 +119,8 @@ export const UI = {
     en: "Victor Hugo Gomes Xavier — Full Stack & Mobile Developer",
   },
   docDesc: {
-    pt: "Desenvolvedor Full Stack e Mobile em Brasília/DF. React, React Native, TypeScript, Next.js, Node.js e C#/.NET. 14+ sistemas web e mobile em produção.",
-    en: "Full Stack & Mobile Developer based in Brasília, Brazil. React, React Native, TypeScript, Next.js, Node.js and C#/.NET. 14+ web and mobile systems in production.",
+    pt: "Desenvolvedor Full Stack e Mobile em Brasília/DF. React, React Native, TypeScript, Next.js, Node.js e C#/.NET. 20+ sistemas web e mobile em produção.",
+    en: "Full Stack & Mobile Developer based in Brasília, Brazil. React, React Native, TypeScript, Next.js, Node.js and C#/.NET. 20+ web and mobile systems in production.",
   },
 } satisfies Record<string, Localized>;
 

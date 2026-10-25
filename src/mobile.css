@@ -1048,3 +1048,38 @@ html[data-embedded]::-webkit-scrollbar {
   height: auto;
   width: 220%;
 }
+
+/* Ícones com logo: a logo ocupa o quadro todo e o item aberto ganha um anel verde */
+.m-index-icon.has-logo {
+  overflow: hidden;
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.m-index-icon.has-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.m-index-item.open .m-index-icon.has-logo {
+  background: none;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* Setas ao redor dos pontinhos das telas */
+.m-shots-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+.m-shots-nav .m-dots {
+  margin-top: 0;
+}
+.m-shots-nav .m-icon-btn {
+  min-width: 34px;
+  height: 34px;
+}
+.m-shots-nav .m-icon-btn:disabled {
+  opacity: 0.35;
+}

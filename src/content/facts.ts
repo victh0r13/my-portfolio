@@ -6,12 +6,12 @@ export type AboutFact = { label: Localized; value: Localized };
 
 export const FACTS: Fact[] = [
   {
-    value: 14,
+    value: 20,
     suffix: "+",
     label: { pt: "sistemas web e mobile em produção", en: "web and mobile systems in production" },
   },
   {
-    value: 6,
+    value: 10,
     suffix: "+",
     label: { pt: "apps React Native entregues", en: "React Native apps shipped" },
   },
