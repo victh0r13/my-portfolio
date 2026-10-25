@@ -36,6 +36,7 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     id: "dra-karen-xavier",
+    logo: "assets/logos/dra-karen-xavier.png",
     name: "Dra. Karen Xavier",
     org: "Freelance",
     kind: "web",
@@ -56,6 +57,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "le-signature",
+    logo: "assets/logos/le-signature.png",
     name: "Le Signature",
     org: "Freelance",
     kind: "web",
@@ -73,6 +75,7 @@ export const PROJECTS: Project[] = [
 
   {
     id: "kurio",
+    logo: "assets/logos/kurio.svg",
     name: "Kurio",
     org: { pt: "Desafio técnico", en: "Technical challenge" },
     kind: "web",
